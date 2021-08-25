@@ -1,0 +1,25 @@
+{
+  "name": "employee",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/a89ball/Employee-Tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/a89ball/Employee-Tracker/issues"
+  },
+  "homepage": "https://github.com/a89ball/Employee-Tracker#readme",
+  "dependencies": {
+    "console.table": "^0.10.0",
+    "i": "^0.3.6",
+    "inquirer": "^8.1.2",
+    "mysql2": "^2.3.0"
+  }
+}
