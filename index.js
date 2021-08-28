@@ -25,16 +25,16 @@ connection.connect(function (err) {
 function start() {
     inquirer.prompt([
         {
-        type: 'list',
-        name: 'selection',
-        message: 'What would you like to do?',
-        choices: [
-            "View",
-            "Add",
-            "Update",
-            "Exit"
-        ]
-    }
+            type: 'list',
+            name: 'selection',
+            message: 'What would you like to do?',
+            choices: [
+                "View",
+                "Add",
+                "Update",
+                "Exit"
+            ]
+        }
 
     ]).then(function (res) {
         switch (res.start) {
@@ -57,7 +57,9 @@ function start() {
     })
 }
 
-function view(){
+//View functions list
+
+function view() {
     inquirer.prompt([
         {
             type: "list",
@@ -66,19 +68,19 @@ function view(){
             choices: ["All employees", "By department", "By role"]
 
         }
-    ]).then(function(res){
+    ]).then(function (res) {
         switch (res.view) {
             case "All employees":
                 viewAllEmployees();
-                
+
                 break;
-                case "By department":
-                    viewAllEmployees();
-                    
-                    break;
-                case "By role":
-                    viewByRole();
-        
+            case "By department":
+                viewAllEmployees();
+
+                break;
+            case "By role":
+                viewByRole();
+
             default:
                 console.log("default");
 
@@ -86,11 +88,71 @@ function view(){
     });
 }
 
-function viewAllEmployees(){
+function viewAllEmployees() {
 
-connection.query("Select e.id AS ID, e.first_name AS first, e.last_name AS last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id", function(err, results){
-    if(err) throw err;
-    console.table(results);
-    start()
-})
-}
+    connection.query("Select e.id AS ID, e.first_name AS first, e.last_name AS last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id",
+        function (err, results) {
+            if (err) throw err;
+            console.table(results);
+            start()
+        })
+};
+
+function viewByDepartment() {
+
+    connection.query(
+        "SELECT id, name AS department FROM department", function (err, results) {
+            if (err) throw err;
+
+            inquirer.prompt([
+                {
+                    name: "choice",
+                    type: "rawlist",
+                    choices: function () {
+                        let choiceArr = []
+                        for (i = i < array.length; i++) {
+                            choiceArr.push(results[i].name);
+                        }
+                        return choiceArr;
+                    },
+                    message: "Select department"
+
+                }
+            ]).then(function (answer) {
+                connection.query(
+                    "Select e.id AS ID, e.first_name AS first, e.last_name AS Last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id",
+                    function (err, res) {
+                        if (err) throw err;
+                        console.table(res);
+                        start()
+                    });
+
+            function viewByRole() {
+    connection.query(
+        "SELECT id, name AS department FROM department", function (err, results) {
+            if (err) throw err;
+
+            inquirer.prompt([
+                {
+                    name: "choice",
+                    type: "rawlist",
+                    choices: function () {
+                        let choiceArr = []
+                        for (i = i < array.length; i++) {
+                            choiceArr.push(results[i].name);
+                        }
+                        return choiceArr;
+                    },
+                    message: "Select department"
+
+                }
+            ]).then(function (answer) {
+                connection.query(
+                    "Select e.id AS ID, e.first_name AS first, e.last_name AS Last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id",
+                    function (err, res) {
+                        if (err) throw err;
+                        console.table(res);
+                        start()
+                    });
+
+            }
