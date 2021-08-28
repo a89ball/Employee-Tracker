@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
     user: "root",
     //Password
     password: "Babazoolay11",
-    database: "Employee_Tracker.db",
+    database: "employee.db",
 });
 //Connect to server and db
 connection.connect(function (err) {
@@ -26,7 +26,7 @@ function start() {
     inquirer.prompt([
         {
             type: 'list',
-            name: 'selection',
+            name: 'start',
             message: 'What would you like to do?',
             choices: [
                 "View",
@@ -75,7 +75,7 @@ function view() {
 
                 break;
             case "By department":
-                viewAllEmployees();
+                viewByDepartment();
 
                 break;
             case "By role":
