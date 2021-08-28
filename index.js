@@ -271,5 +271,52 @@ function addEmployeerole() {
 }
 
 function addEmployee(){
-    connection.query("SELECT * FROM role", function(err))
+    connection.query("SELECT * FROM role", function(err, results){
+        if(err) throw err;
+
+        inquirer.prompt([
+            {
+                name: "firstName",
+                type: "input",
+                message: "Enter employee forename"
+            },
+            {
+                name: "lastName",
+                type: "input",
+                message: "Enter employee surname"
+            },
+            {
+                name: "role",
+                type:"rawlist",
+                choices: function(){
+                    var choiceArr = [];
+                    for (let i = 0; i < results.length; i++) {
+                        choiceArr.push(results[i].title)
+                    }
+                    return choiceArr;
+                        
+                    },
+                    message: "Select title"
+                    },
+                    {
+                   name: "manager",
+                   type: "number", 
+                   validate: function(value){
+                       if (isNaN(value) === false){
+                           return true;
+                       }
+                       return false;
+                   },
+                   message: "Enter manager ID",
+                   default: "1"
+                }
+            }
+        ]).then(function(answer){
+            connection.query(
+                "INSERT INTO employee SET ?",
+                {
+                    
+                })
+        })
+    })
 }
