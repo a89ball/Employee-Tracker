@@ -85,3 +85,12 @@ function view(){
         }
     });
 }
+
+function viewAllEmployees(){
+
+connection.query("Select e.id AS ID, e.first_name AS first, e.last_name AS last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id", function(err, results){
+    if(err) throw err;
+    console.table(results);
+    start()
+})
+}
