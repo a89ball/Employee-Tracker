@@ -171,4 +171,54 @@ function viewByRole() {
         });
 }
 
+    function add(){
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "add",
+                message:"What would you like to add?",
+                choices: ["Department", "Employee role", "Employee"]
+            
+            }
+        ]).then(function(res){
+            switch (res.add) {
+                case "Department":
+                    addDepartment();
+                    
+                    break;
+                case "Employee role":
+                    addEmployeerole();
+                    break;
+                case "Employee":
+                    addEmployeerole();
 
+                    break;
+           
+                default:
+                    console.log("default");
+            }
+        })
+    }
+
+    function addDepartment(){
+        inquirer.prompt([
+            {
+                name: "department",
+                type: "input",
+                message: "What is the name of the department?"
+    
+            }
+        ]).then(function(answer){
+            connection.query(
+                "INSERT INTO department VALUES (DEFAULT, ?)",
+                [answer.department],
+                function(err){
+                    if(err) throw err;
+                    console.log("Department name is now" + answer.department);
+
+                    start();
+                }
+            )
+        })
+
+    }
