@@ -248,10 +248,13 @@ function addEmployeerole() {
             validate: function (value) {
                 if (isNaN(value) === false) {
                     return true;
+                
                 }
+                return false;
+            }
             }
 
-                ]).then(function (answer) {
+                ]).then(function(answer) {
                 connection.query(
                     "INSERT INTO role SET ?",
                     {
@@ -270,9 +273,9 @@ function addEmployeerole() {
             })
 }
 
-function addEmployee(){
-    connection.query("SELECT * FROM role", function(err, results){
-        if(err) throw err;
+function addEmployee() {
+    connection.query("SELECT * FROM role", function (err, results) {
+        if (err) throw err;
 
         inquirer.prompt([
             {
@@ -287,36 +290,41 @@ function addEmployee(){
             },
             {
                 name: "role",
-                type:"rawlist",
-                choices: function(){
+                type: "rawlist",
+                choices: function () {
                     var choiceArr = [];
                     for (let i = 0; i < results.length; i++) {
                         choiceArr.push(results[i].title)
                     }
                     return choiceArr;
-                        
-                    },
-                    message: "Select title"
-                    },
-                    {
-                   name: "manager",
-                   type: "number", 
-                   validate: function(value){
-                       if (isNaN(value) === false){
-                           return true;
-                       }
-                       return false;
-                   },
-                   message: "Enter manager ID",
-                   default: "1"
-                }
+
+                },
+                message: "Select title"
+            },
+            {
+                name: "manager",
+                type: "number",
+                validate: function (value) {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    return false;
+                },
+                message: "Enter manager ID",
+                default: "1"
             }
-        ]).then(function(answer){
-            connection.query(
-                "INSERT INTO employee SET ?",
-                {
-                    
-                })
-        })
-    })
+        ]).then(function (answer) {
+                connection.query(
+                    "INSERT INTO employee SET ?",
+                    {
+                        first_name: answer.firstName,
+                        last_name: answer.lastName,
+                        role_id: answer.role,
+                        manager_id: answer.manager
+                    }
+                )
+                console.log("Employee added!");
+                start()
+            });
+});
 }
