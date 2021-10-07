@@ -1,5 +1,5 @@
 //Defining dependencies
-const mysql = require("mysql");
+const mysql = require("mysql2");
 const inquirer = require("inquirer");
 const consoleTable = require("console.table");
 
@@ -13,7 +13,7 @@ const connection = mysql.createConnection({
     user: "root",
     //Password
     password: "password",
-    database: "employee.db",
+    database: "employee_db",
 });
 //Connect to server and db
 connection.connect(function (err) {
@@ -90,7 +90,7 @@ function view() {
 
 function viewAllEmployees() {
 
-    connection.query("Select e.id AS ID, e.first_name AS first, e.last_name AS last, e.role_id AS role, r.salary AS Salary, m.last name AS Manager, d.name LEFT JOIN role r ON e.role_id = r.title LEFT JOIN department d ON r. department_id = d.id",
+    connection.query("Select e.id AS ID, e.first_name AS first, e.last_name AS last,  e.role_id AS role, r.salary AS Salary, m.last_name AS Manager, d.name AS Department FROM employee e LEFT JOIN employee m ON e.manager_id = m.id LEFT JOIN role r  ON e.role_id = r.title  LEFT JOIN department d ON r. department_id = d.id",
         function (err, results) {
             if (err) throw err;
             console.table(results);
